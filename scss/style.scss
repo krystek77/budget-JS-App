@@ -5,3 +5,115 @@
 *::after {
     box-sizing: border-box;
 }
+
+body {
+    font-family: Montserrat, sans-serif;
+    font-weight: 400;
+    margin: 0;
+    background-color: $color-black;
+    color: $color-grey;
+    min-height: 100vh;
+}
+
+h1,
+h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: Oswald, sans-serif;
+    font-weight: 700;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.container {
+    max-width: 1170px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.percentage {
+    padding: $gap/3;
+    margin-left: $gap/3;
+    border-radius: 0.2rem;
+    font-weight: 500;
+    color: lighten($color: $color-grey, $amount: 60);
+}
+
+.header {
+    padding-top: $gap;
+    padding-bottom: $gap;
+    background: url("../images/header_bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left center;
+
+    &--title {
+        text-transform: capitalize;
+        margin-bottom: $gap;
+        text-shadow: 0px 0px 2px darken($color: $color-black, $amount: 100);
+        font-size: 3rem;
+    }
+
+    &--description {
+        font-size: 1.4rem;
+        padding: $gap;
+        color: lighten($color: $color-grey, $amount: 40);
+    }
+
+    &--budget-value {
+        font-weight: 700;
+        font-size: 3rem;
+        font-family: Oswald, sans-serif;
+        letter-spacing: 0.2rem;
+        color: lighten($color: $color-grey, $amount: 40);
+    }
+
+    &--percentage {
+        background-color: rgba($color: $color-grey, $alpha: 0.3);
+        border: 1px solid rgba($color: $color-grey, $alpha: 0.2);
+
+    }
+}
+
+.summary {
+    padding: $gap;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: $gap;
+    margin-bottom: $gap;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 340px;
+
+    &--label {
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    &--value {
+        align-self: center;
+        font-weight: 500;
+        color: lighten($color: $color-grey, $amount: 60);
+    }
+
+    &--values__expences {
+        display: flex;
+    }
+
+    &__incomes {
+        background-color: $color-blue;
+        padding-top: $gap + 5px;
+        padding-bottom: $gap + 5px;
+    }
+
+    &__expences {
+        background-color: $color-red;
+    }
+
+}
