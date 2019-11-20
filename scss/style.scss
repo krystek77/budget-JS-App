@@ -6,11 +6,14 @@
     box-sizing: border-box;
 }
 
+
 body {
+    display: flex;
+    flex-direction: column;
     font-family: Montserrat, sans-serif;
     font-weight: 400;
     margin: 0;
-    background-color: $color-black;
+    // background-color: $color-black;
     color: $color-grey;
     min-height: 100vh;
 }
@@ -38,7 +41,7 @@ ul {
 
 .percentage {
     padding: $gap/3;
-    margin-left: $gap/3;
+    margin-left: $gap * 10px / $gap;
     border-radius: 0.2rem;
     font-weight: 500;
     color: lighten($color: $color-grey, $amount: 60);
@@ -122,21 +125,49 @@ ul {
     cursor: pointer;
     border-radius: 0.2rem;
     border: 1px solid $color-grey;
-    height: 48px;
-    width: 48px;
+    padding: $gap * 10px / $gap;
     text-align: center;
     transition: all .3s ease-in;
     outline: none;
+    margin-left: $gap;
 
     i {
         font-size: 1.5rem;
     }
 
     &__add {
-        margin-left: $gap;
 
         &:hover {
             background-color: $color-yellow;
+        }
+    }
+
+    &__incomes {
+        background-color: rgba($color: $color-blue, $alpha: 0.2);
+        color: $color-blue;
+
+        &:hover {
+            background-color: $color-yellow;
+        }
+    }
+
+    &__expences {
+        background-color: rgba($color: $color-red, $alpha: 0.2);
+        color: $color-red;
+
+        &:hover {
+            background-color: $color-yellow;
+        }
+    }
+
+    &__incomes,
+    &__expences {
+        display: none;
+        padding: $gap/5 $gap/3;
+        float: right;
+
+        i {
+            font-size: 1.2rem;
         }
     }
 }
@@ -169,5 +200,117 @@ ul {
         border: 1px solid $color-grey;
         font-size: 1.2rem;
         border-radius: 0.2rem;
+    }
+}
+
+.incomes,
+.expences {
+    .title {
+        text-align: left;
+        text-transform: uppercase;
+        margin-bottom: $gap;
+    }
+
+    .label {
+        color: $color-black;
+        font-family: Oswald;
+        font-weight: 300;
+        float: left;
+        text-align: left;
+    }
+
+
+    .incomes {
+        &--title {
+            color: $color-red;
+        }
+
+        &--value {
+            color: $color-blue;
+        }
+    }
+
+    .expences {
+        &--title {
+            color: $color-blue;
+        }
+
+        &--value {
+            color: $color-red;
+        }
+
+        &--percentage {
+            background-color: rgba($color: $color-red, $alpha: 0.3);
+            border: 1px solid rgba($color: $color-red, $alpha: 0.2);
+            font-size: 0.8rem;
+        }
+    }
+}
+
+.item {
+
+    padding: $gap/2 $gap;
+    background-color: lighten($color: $color-grey, $amount: 20);
+    font-size: 1.2rem;
+    border-top: 1px solid $color-grey;
+    border-bottom: 1px solid $color-grey;
+    margin: $gap/3 0;
+    overflow: hidden;
+
+    .value,
+    .percentage {
+        transition: all .3s ease-in;
+    }
+
+    .values {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease-in;
+        float: right;
+    }
+
+    &:hover {
+        .values {
+            transform: translateX(-10px);
+        }
+
+        .btn {
+            display: block;
+        }
+    }
+
+    &:nth-child(2n) {
+        background-color: lighten($color: $color-grey, $amount: 10);
+    }
+
+    .value {
+        font-family: Oswald;
+        font-weight: 300;
+    }
+}
+
+.main {
+    flex-grow: 1;
+}
+
+.content {
+    padding: $gap*2;
+
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: $gap*2;
+    }
+}
+
+.footer {
+    background-color: darken($color:$color-black, $amount:20);
+    color: lighten($color:$color-grey, $amount:10);
+    font-family: Oswald;
+    font-weight: 300;
+
+    .container {
+        padding: $gap;
     }
 }
