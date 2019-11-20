@@ -117,3 +117,57 @@ ul {
     }
 
 }
+
+.btn {
+    cursor: pointer;
+    border-radius: 0.2rem;
+    border: 1px solid $color-grey;
+    height: 48px;
+    width: 48px;
+    text-align: center;
+    transition: all .3s ease-in;
+    outline: none;
+
+    i {
+        font-size: 1.5rem;
+    }
+
+    &__add {
+        margin-left: $gap;
+
+        &:hover {
+            background-color: $color-yellow;
+        }
+    }
+}
+
+.form {
+    padding: $gap;
+    background-color: lighten($color: $color-grey, $amount: 10);
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &--select {
+        padding: $gap/2;
+        margin-right: $gap;
+        border-radius: 0.2rem;
+        border: 1px solid $color-grey;
+        outline: none;
+    }
+
+    &--description {
+        width: 360px;
+    }
+
+    &--value,
+    &--description {
+        padding: $gap;
+        border: 1px solid $color-grey;
+        font-size: 1.2rem;
+        border-radius: 0.2rem;
+    }
+}
