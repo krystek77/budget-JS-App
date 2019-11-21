@@ -15,6 +15,14 @@ const budgetController = (function () {
         this.value = value;
     }
 
+    const calculateTotal = function (type) {
+        let sum = 0;
+        state.allItems[type].forEach(function (item) {
+            sum += item.value;
+        });
+        state.totals[type] = sum;
+    }
+
     const state = {
         allItems: {
             income: [],
@@ -25,6 +33,7 @@ const budgetController = (function () {
             expence: 0
         },
         budget: 0,
+        percentage: "---",
         errorMessage: {
             msgBoth: "Both fields have to be filled!",
             msgDesc: "Description have to filled.",
@@ -33,6 +42,31 @@ const budgetController = (function () {
     }
 
     return {
+        //return budget
+        returnBudget: function () {
+            return {
+                totalsIncome: state.totals.income,
+                totalsExpence: state.totals.expence,
+                budget: state.budget,
+                percentage: state.percentage
+            }
+        },
+        //calculate Budget
+        calculateBudget: function () {
+
+            // 1.Calculate incomes
+            calculateTotal('income');
+            // 2.Calculate expences
+            calculateTotal('expence');
+            // 3.Calculate budget
+            state.budget = state.totals.income - state.totals.expence;
+            // 4.Calculate percenatge of incomes that we spent
+            if (state.totals.income > 0) {
+                state.percentage = Math.round((state.totals.expence / state.totals.income) * 100);
+            } else {
+                state.percentage = "---";
+            }
+        },
 
         //check if all fields are filled
         isFieldFilled: function (description, value) {
@@ -50,7 +84,7 @@ const budgetController = (function () {
                 alert(state.errorMessage.msgDesc);
                 isFieldFilled = false;
                 return isFieldFilled;
-            }   
+            }
             return isFieldFilled;
         },
 
@@ -168,7 +202,13 @@ const UIController = (function () {
 const appController = (function (bC, uiC) {
     console.log("Starting application.");
 
+    const updateBudget = function () {
+        //1. Calculate budget
+        bC.calculateBudget();
+        //2. Return budhet
 
+        //3. Display the budget on the UI
+    }
 
     return {
         init: function () {
@@ -187,8 +227,9 @@ const appController = (function (bC, uiC) {
                 }
                 uiC.clearFields();
 
-                //4. Calculate budget
-                //5. Display the budget on the UI
+                //4. Calculate and update Budget
+                updateBudget();
+
                 bC.testing();
             })
         }
