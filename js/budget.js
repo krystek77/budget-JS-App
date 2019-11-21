@@ -27,14 +27,29 @@ const budgetController = (function () {
 
     return {
 
-        state,
-        addItemToList: function (type, description, value) {
+        addItem: function (type, description, value) {
+            let newItem, ID;
+
+            //[1,2,3,4,5,6] = 7
+            //[1,2,4,6,7] = 8;
+            //next id
             
+            if (state.allItems[type].length === 0) ID = 0;
+            else ID = (state.allItems[type][(state.allItems[type].length - 1)].id) + 1;
+
+            if (type === "income") {
+                newItem = new Income(ID, description, value);
+            } else if (type === "expence") {
+                newItem = new Expence(ID, description, value);
+            }
+            state.allItems[type].push(newItem);
+
+            return newItem;
         },
 
         testing: function () {
             console.log("Testing Budget Controller ...");
-            console.log(this.state);
+            console.log(state);
         }
     }
 
@@ -56,7 +71,7 @@ const UIController = (function () {
         //testing UI Controller
         testing: function () {
             console.log("Testing UI Controller ...");
-            console.log(this.getInputs());
+            console.log("Getting inputs: " + this.getInputs());
         }
     }
 })();
@@ -68,12 +83,14 @@ const appController = (function (bC, uiC) {
         event.preventDefault();
         const inputs = uiC.getInputs();
         uiC.testing();
+        //2. Add item to the budget controller
+        const newItem = bC.addItem(inputs.type, inputs.description, inputs.value);
 
+
+        //3. Add item to the UI
+        //4. Calculate budget
+        //5. Display the budget on the UI
         bC.testing();
     })
-    //2. Add item to the budget controller
-    //3. Add item to the UI
-    //4. Calculate budget
-    //5. Display the budget on the UI
 
 })(budgetController, UIController);
