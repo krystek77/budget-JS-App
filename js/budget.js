@@ -1,9 +1,33 @@
 const budgetController = (function () {
     console.log("Budget Controller invoked.");
 
+    const Income = function (id, description, value) {
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    }
+
+    const Expence = function (id, description, value) {
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    }
+
+    const allItems = {
+        income: [],
+        expence: [],
+        total: {
+            income: 0,
+            expence: 0,
+        },
+        budget: 0,
+    }
+
     return {
+        allItems,
         testing: function () {
             console.log("Testing Budget Controller ...");
+            console.log(this.allItems);
         }
     }
 
@@ -38,7 +62,7 @@ const appController = (function (bC, uiC) {
         const inputs = uiC.getInputs();
         uiC.testing();
 
-        // bC.testing();
+        bC.testing();
     })
     //2. Add item to the budget controller
     //3. Add item to the UI
