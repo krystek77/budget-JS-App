@@ -81,6 +81,12 @@ const UIController = (function () {
                 type: document.querySelector(DOMStrings.inputType).value
             }
         },
+        //clear fields
+        clearFields: function () {
+            document.querySelector(DOMStrings.inputValue).value = 0;
+            document.querySelector(DOMStrings.inputDescription).value = "";
+        },
+
         //Add item to correct list
         addItemToList: function (type, newItem) {
             let list = null;
@@ -151,6 +157,7 @@ const appController = (function (bC, uiC) {
 
                 //3. Add item to the UI
                 uiC.addItemToList(inputs.type, newItem);
+                uiC.clearFields();
 
                 //4. Calculate budget
                 //5. Display the budget on the UI
