@@ -117,6 +117,13 @@ const budgetController = (function () {
                 state.allItems[type].splice(index, 1);
             }
         },
+        
+        deleteItem2: function (type, id) {
+            const index = state.allItems[type].findIndex(function (item) {
+                return item.id === id;
+            })
+            state.allItems[type].splice(index, 1);
+        },
 
         testing: function () {
             console.log("Testing Budget Controller ...");
@@ -287,7 +294,8 @@ const appController = (function (bC, uiC) {
                     const whichList = idItemArr[0]; //income or expence
                     const id = parseInt(idItemArr[1], 10);
                     //Delete specified item from our data structure
-                    bC.delteItem(whichList, id);
+                    // bC.delteItem(whichList, id);
+                    bC.deleteItem2(whichList, id);
 
                     //Delete specified item to UI
                     //Recalculate budget
