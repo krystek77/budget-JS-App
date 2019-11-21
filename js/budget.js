@@ -58,14 +58,27 @@ const budgetController = (function () {
 const UIController = (function () {
     console.log("UI Controller invoked.");
 
+    const DOMStrings = {
+        inputValue: '.form--value',
+        inputDescription: '.form--description',
+        inputType: '.form--select',
+        incomesList: '.incomes--items',
+        expencesList: '.expences--items',
+        addBtn: '.btn__add'
+    }
 
     return {
+        //get selectors of elements
+        getDOMStrings: function () {
+            return DOMStrings;
+        },
+
         //get the field input data
         getInputs: function () {
             return {
-                value: document.querySelector('.form--value').value,
-                description: document.querySelector('.form--description').value,
-                type: document.querySelector('.form--select').value
+                value: document.querySelector(DOMStrings.inputValue).value,
+                description: document.querySelector(DOMStrings.inputDescription).value,
+                type: document.querySelector(DOMStrings.inputType).value
             }
         },
         //Add item to correct list
@@ -77,7 +90,7 @@ const UIController = (function () {
 
 
             if (type === "income") {
-                list = document.querySelector('.incomes--items');
+                list = document.querySelector(DOMStrings.incomesList);
                 markup = `
                 <li class = "item incomes--item" id="income-%id%">
                     <div class="label incomes--label">%description%</div> 
@@ -93,7 +106,7 @@ const UIController = (function () {
                 list.insertAdjacentHTML(position, newMarkup);
 
             } else if (type === "expence") {
-                list = document.querySelector('.expences--items');
+                list = document.querySelector(DOMStrings.expencesList);
                 markup = `
                 <li class="item expences--item" id="expence-%id%">
                     <div class="label expences--label">%description%</div>
@@ -104,7 +117,7 @@ const UIController = (function () {
                     </div>
                 </li>
                 `;
-                
+
                 newMarkup = markup.replace("%id%", newItem.id);
                 newMarkup = newMarkup.replace("%description%", newItem.description);
                 newMarkup = newMarkup.replace("%value%", newItem.value);
@@ -127,7 +140,9 @@ const appController = (function (bC, uiC) {
     return {
         init: function () {
             //1. Get the field input data
-            document.querySelector('.btn__add').addEventListener('click', function (event) {
+            const DOMStrings = uiC.getDOMStrings();
+
+            document.querySelector(DOMStrings.addBtn).addEventListener('click', function (event) {
                 event.preventDefault();
                 const inputs = uiC.getInputs();
                 uiC.testing();
@@ -136,7 +151,6 @@ const appController = (function (bC, uiC) {
 
                 //3. Add item to the UI
                 uiC.addItemToList(inputs.type, newItem);
-
 
                 //4. Calculate budget
                 //5. Display the budget on the UI
