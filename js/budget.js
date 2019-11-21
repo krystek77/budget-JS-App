@@ -76,7 +76,7 @@ const UIController = (function () {
         //get the field input data
         getInputs: function () {
             return {
-                value: document.querySelector(DOMStrings.inputValue).value,
+                value: parseFloat(document.querySelector(DOMStrings.inputValue).value),
                 description: document.querySelector(DOMStrings.inputDescription).value,
                 type: document.querySelector(DOMStrings.inputType).value
             }
