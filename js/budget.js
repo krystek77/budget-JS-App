@@ -13,6 +13,15 @@ const budgetController = (function () {
         this.id = id;
         this.description = description;
         this.value = value;
+        this.percentage = -1;
+
+        this.calculatePercentage = function () {
+            if (state.totals.income > 0) {
+                this.percentage = Math.round((this.value / state.totals.income) * 100);
+            } else {
+                this.percentage = "---";
+            }
+        }
     }
 
     const calculateTotal = function (type) {
@@ -42,6 +51,14 @@ const budgetController = (function () {
     }
 
     return {
+
+        //Recalculate the percentage of incomes for each expence
+        recalculatePercentage: function () {
+            state.allItems['expence'].forEach(function (item) {
+                item.calculatePercentage();
+            })
+        },
+
         //return budget
         returnBudget: function () {
             return {
@@ -101,6 +118,7 @@ const budgetController = (function () {
                 newItem = new Income(ID, description, value);
             } else if (type === "expence") {
                 newItem = new Expence(ID, description, value);
+                newItem.calculatePercentage();
             }
 
             state.allItems[type].push(newItem);
@@ -281,6 +299,8 @@ const appController = (function (bC, uiC) {
 
                     //4. Calculate and update Budget
                     updateBudget();
+                    //5. Recalculate percentage of incomes for each expence
+                    bC.recalculatePercentage();
 
                     bC.testing();
                 }
@@ -307,6 +327,8 @@ const appController = (function (bC, uiC) {
                     //Recalculate budget
                     //Display recalculate budget
                     updateBudget();
+                    //5. Recalculate percentage of incomes for each expence
+                    bC.recalculatePercentage();
 
                     bC.testing();
 
