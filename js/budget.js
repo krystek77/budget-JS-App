@@ -33,7 +33,7 @@ const budgetController = (function () {
             //[1,2,3,4,5,6] = 7
             //[1,2,4,6,7] = 8;
             //next id
-            
+
             if (state.allItems[type].length === 0) ID = 0;
             else ID = (state.allItems[type][(state.allItems[type].length - 1)].id) + 1;
 
@@ -78,19 +78,27 @@ const UIController = (function () {
 const appController = (function (bC, uiC) {
     console.log("Starting application.");
 
-    //1. Get the field input data
-    document.querySelector('.btn__add').addEventListener('click', function (event) {
-        event.preventDefault();
-        const inputs = uiC.getInputs();
-        uiC.testing();
-        //2. Add item to the budget controller
-        const newItem = bC.addItem(inputs.type, inputs.description, inputs.value);
 
 
-        //3. Add item to the UI
-        //4. Calculate budget
-        //5. Display the budget on the UI
-        bC.testing();
-    })
+    return {
+        init: function () {
+            //1. Get the field input data
+            document.querySelector('.btn__add').addEventListener('click', function (event) {
+                event.preventDefault();
+                const inputs = uiC.getInputs();
+                uiC.testing();
+                //2. Add item to the budget controller
+                const newItem = bC.addItem(inputs.type, inputs.description, inputs.value);
+
+
+                //3. Add item to the UI
+                //4. Calculate budget
+                //5. Display the budget on the UI
+                bC.testing();
+            })
+        }
+    }
 
 })(budgetController, UIController);
+
+appController.init();
