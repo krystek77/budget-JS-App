@@ -13,21 +13,28 @@ const budgetController = (function () {
         this.value = value;
     }
 
-    const allItems = {
-        income: [],
-        expence: [],
-        total: {
-            income: 0,
-            expence: 0,
+    const state = {
+        allItems: {
+            income: [],
+            expence: []
         },
-        budget: 0,
+        totals: {
+            income: 0,
+            expence: 0
+        },
+        budget: 0
     }
 
     return {
-        allItems,
+
+        state,
+        addItemToList: function (type, description, value) {
+            
+        },
+
         testing: function () {
             console.log("Testing Budget Controller ...");
-            console.log(this.allItems);
+            console.log(this.state);
         }
     }
 
