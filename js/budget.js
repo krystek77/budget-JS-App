@@ -2,12 +2,14 @@ const budgetController = (function () {
     console.log("Budget Controller invoked.");
 
     const Income = function (id, description, value) {
+
         this.id = id;
         this.description = description;
         this.value = value;
     }
 
     const Expence = function (id, description, value) {
+
         this.id = id;
         this.description = description;
         this.value = value;
@@ -25,11 +27,32 @@ const budgetController = (function () {
         budget: 0
     }
 
+
+
     return {
+
+        //check if all fields are filled
+        isFieldFilled: function (description, value) {
+            let isFieldFilled = true;
+
+            if (description === "" && value === 0) {
+                alert("Both fields have to be filled!");
+                isFieldFilled = false;
+                return isFieldFilled;
+            } else if (description != "" && value <= 0) {
+                alert("Value have to grater than zero.");
+                isFieldFilled = false;
+                return isFieldFilled;
+            } else if (description === "" && value > 0) {
+                alert("Descrition have to filled. ");
+                isFieldFilled = false;
+                return isFieldFilled;
+            }
+            return isFieldFilled;
+        },
 
         addItem: function (type, description, value) {
             let newItem, ID;
-
             //[1,2,3,4,5,6] = 7
             //[1,2,4,6,7] = 8;
             //next id
@@ -42,8 +65,8 @@ const budgetController = (function () {
             } else if (type === "expence") {
                 newItem = new Expence(ID, description, value);
             }
-            state.allItems[type].push(newItem);
 
+            state.allItems[type].push(newItem);
             return newItem;
         },
 
@@ -153,10 +176,11 @@ const appController = (function (bC, uiC) {
                 const inputs = uiC.getInputs();
                 uiC.testing();
                 //2. Add item to the budget controller
-                const newItem = bC.addItem(inputs.type, inputs.description, inputs.value);
-
-                //3. Add item to the UI
-                uiC.addItemToList(inputs.type, newItem);
+                if (bC.isFieldFilled(inputs.description, inputs.value)) {
+                    const newItem = bC.addItem(inputs.type, inputs.description, inputs.value);
+                     //3. Add item to the UI
+                     uiC.addItemToList(inputs.type, newItem);
+                }
                 uiC.clearFields();
 
                 //4. Calculate budget
