@@ -33,7 +33,7 @@ const budgetController = (function () {
             expence: 0
         },
         budget: 0,
-        percentage: "---",
+        percentage: -1,
         errorMessage: {
             msgBoth: "Both fields have to be filled!",
             msgDesc: "Description have to filled.",
@@ -124,10 +124,29 @@ const UIController = (function () {
         inputType: '.form--select',
         incomesList: '.incomes--items',
         expencesList: '.expences--items',
-        addBtn: '.btn__add'
+        addBtn: '.btn__add',
+        budget: '.header--budget-value',
+        incomes: '.summary--value__incomes',
+        expences: '.summary--value__expences',
+        percentage: '.header--percentage'
     }
 
     return {
+
+        //display budget on UI
+        displayBudget: function (obj) {
+
+            document.querySelector(DOMStrings.budget).textContent = obj.budget;
+            document.querySelector(DOMStrings.incomes).textContent = obj.totalsIncome
+            document.querySelector(DOMStrings.expences).textContent = obj.totalsExpence;
+            if (obj.percentage > 0) {
+                document.querySelector(DOMStrings.percentage).textContent = obj.percentage + "%";
+            } else {
+                document.querySelector(DOMStrings.percentage).textContent = "---";
+            }
+
+        },
+
         //get selectors of elements
         getDOMStrings: function () {
             return DOMStrings;
@@ -195,7 +214,7 @@ const UIController = (function () {
         //testing UI Controller
         testing: function () {
             console.log("Testing UI Controller ...");
-            console.log("Getting inputs: " + this.getInputs());
+            console.log(this.getInputs());
         }
     }
 })();
@@ -205,32 +224,43 @@ const appController = (function (bC, uiC) {
     const updateBudget = function () {
         //1. Calculate budget
         bC.calculateBudget();
-        //2. Return budhet
-
+        //2. Return budget
+        const budget = bC.returnBudget();
         //3. Display the budget on the UI
+        uiC.displayBudget(budget);
     }
 
     return {
         init: function () {
             //1. Get the field input data
             const DOMStrings = uiC.getDOMStrings();
+            //reset budget
+            uiC.displayBudget({
+                totalsIncome: 0,
+                totalsExpence: 0,
+                budget: 0,
+                percentage: -1
+            });
 
             document.querySelector(DOMStrings.addBtn).addEventListener('click', function (event) {
                 event.preventDefault();
                 const inputs = uiC.getInputs();
                 uiC.testing();
                 //2. Add item to the budget controller
-                if (bC.isFieldFilled(inputs.description, inputs.value)) {
+                if(inputs.description !== "" && !isNaN(inputs.value) && inputs.value > 0) {
+
                     const newItem = bC.addItem(inputs.type, inputs.description, inputs.value);
                     //3. Add item to the UI
                     uiC.addItemToList(inputs.type, newItem);
+                 
+                    uiC.clearFields();
+    
+                    //4. Calculate and update Budget
+                    updateBudget();
+    
+                    bC.testing();
                 }
-                uiC.clearFields();
-
-                //4. Calculate and update Budget
-                updateBudget();
-
-                bC.testing();
+               
             })
         }
     }
