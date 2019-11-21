@@ -46,11 +46,11 @@ const budgetController = (function () {
                 alert(state.errorMessage.msgVal);
                 isFieldFilled = false;
                 return isFieldFilled;
-            } else if (description === "" && value > 0) {
+            } else if (description === "" && (value > 0 || value < 0)) {
                 alert(state.errorMessage.msgDesc);
                 isFieldFilled = false;
                 return isFieldFilled;
-            }
+            }   
             return isFieldFilled;
         },
 
@@ -111,6 +111,7 @@ const UIController = (function () {
         clearFields: function () {
             document.querySelector(DOMStrings.inputValue).value = 0;
             document.querySelector(DOMStrings.inputDescription).value = "";
+            document.querySelector(DOMStrings.inputDescription).focus();
         },
 
         //Add item to correct list
