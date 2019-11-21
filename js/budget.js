@@ -24,10 +24,13 @@ const budgetController = (function () {
             income: 0,
             expence: 0
         },
-        budget: 0
+        budget: 0,
+        errorMessage: {
+            msgBoth: "Both fields have to be filled!",
+            msgDesc: "Description have to filled.",
+            msgVal: "Value have to grater than zero."
+        }
     }
-
-
 
     return {
 
@@ -36,15 +39,15 @@ const budgetController = (function () {
             let isFieldFilled = true;
 
             if (description === "" && value === 0) {
-                alert("Both fields have to be filled!");
+                alert(state.errorMessage.msgBoth);
                 isFieldFilled = false;
                 return isFieldFilled;
             } else if (description != "" && value <= 0) {
-                alert("Value have to grater than zero.");
+                alert(state.errorMessage.msgVal);
                 isFieldFilled = false;
                 return isFieldFilled;
             } else if (description === "" && value > 0) {
-                alert("Descrition have to filled. ");
+                alert(state.errorMessage.msgDesc);
                 isFieldFilled = false;
                 return isFieldFilled;
             }
@@ -178,8 +181,8 @@ const appController = (function (bC, uiC) {
                 //2. Add item to the budget controller
                 if (bC.isFieldFilled(inputs.description, inputs.value)) {
                     const newItem = bC.addItem(inputs.type, inputs.description, inputs.value);
-                     //3. Add item to the UI
-                     uiC.addItemToList(inputs.type, newItem);
+                    //3. Add item to the UI
+                    uiC.addItemToList(inputs.type, newItem);
                 }
                 uiC.clearFields();
 
