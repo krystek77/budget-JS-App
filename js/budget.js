@@ -128,7 +128,8 @@ const UIController = (function () {
         budget: '.header--budget-value',
         incomes: '.summary--value__incomes',
         expences: '.summary--value__expences',
-        percentage: '.header--percentage'
+        percentage: '.header--percentage',
+        content: '.content'
     }
 
     return {
@@ -247,20 +248,41 @@ const appController = (function (bC, uiC) {
                 const inputs = uiC.getInputs();
                 uiC.testing();
                 //2. Add item to the budget controller
-                if(inputs.description !== "" && !isNaN(inputs.value) && inputs.value > 0) {
+                if (inputs.description !== "" && !isNaN(inputs.value) && inputs.value > 0) {
 
                     const newItem = bC.addItem(inputs.type, inputs.description, inputs.value);
                     //3. Add item to the UI
                     uiC.addItemToList(inputs.type, newItem);
-                 
+
                     uiC.clearFields();
-    
+
                     //4. Calculate and update Budget
                     updateBudget();
-    
+
                     bC.testing();
                 }
-               
+
+            })
+
+            //Add event handler to delete button
+            document.querySelector(DOMStrings.content).addEventListener('click', function (event) {
+
+                const idItem = event.target.parentNode.parentNode.id;
+                if (idItem) {
+                    console.log(idItem);
+                    //split id attribute to 2 parts: id and list name
+
+                    const idItemArr = idItem.split("-");
+                    const whichList = idItemArr[0]; //income or expence
+                    const id = parseInt(idItemArr[1], 10);
+                    //Delete specyfied item from our data structure
+                    
+                    //Delete specyfied item to UI
+                    //Recalculate budget
+                    //Display recalculate budget
+
+
+                }
             })
         }
     }
