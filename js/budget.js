@@ -175,6 +175,7 @@ const UIController = (function () {
         expences: '.summary--value__expences',
         percentage: '.header--percentage',
         content: '.content',
+        expencePercentage: '.expences--percentage'
     }
 
     return {
@@ -262,6 +263,31 @@ const UIController = (function () {
         removeItemFromList: function (element) {
             element.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode);
         },
+        //display percentages
+        displayPercentages: function (percentages) {
+            // console.log("Display the percentages");
+            const percentageFields = document.querySelectorAll(DOMStrings.expencePercentage);
+            // console.log(percentageFields);
+            //Convert NodeList to Array
+            //1. First way: const percentageFieldsArr = Array.prototype.slice.call(percentageFields);
+            //2. Second way: const percentageFieldsArr = [...percentageFields];
+            //3. Thrid way:
+            const nodeListToArray = function (percentageFields, callback) {
+                for (let index = 0; index < percentageFields.length; index++) {
+                    callback(percentageFields[index], index)
+                }
+            }
+            nodeListToArray(percentageFields, function (currentField, index) {
+                if (percentages[index] > 0) {
+                    currentField.textContent = percentages[index] + "%";
+                } else {
+                    currentField.textContent = "---";
+                }
+            })
+            // console.log(document.querySelectorAll(DOMStrings.expencePercentage));
+
+
+        },
 
         //testing UI Controller
         testing: function () {
@@ -270,6 +296,7 @@ const UIController = (function () {
         }
     }
 })();
+
 const appController = (function (bC, uiC) {
     console.log("Starting application.");
 
@@ -295,6 +322,8 @@ const appController = (function (bC, uiC) {
                 //2. Get percentages
                 const percentages = bC.getPercentages();
                 console.log(percentages);
+                //3. Update the percentage to UI
+                uiC.displayPercentages(percentages);
             }
 
             //reset budget
