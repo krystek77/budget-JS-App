@@ -176,7 +176,8 @@ const UIController = (function () {
         percentage: '.header--percentage',
         content: '.content',
         expencePercentage: '.expences--percentage',
-        dateContainer: '.header--description'
+        dateContainer: '.header--description',
+        dateFooterContainer: '.footer > .container'
     }
 
     return {
@@ -316,6 +317,7 @@ const UIController = (function () {
 
         displayDate: function () {
             const dateContainer = document.querySelector(DOMStrings.dateContainer);
+            const dateFooterContainer = document.querySelector(DOMStrings.dateFooterContainer);
             const date = new Date();
             const year = date.getFullYear();
             const month = date.getMonth(); //for example 10 - November
@@ -337,6 +339,7 @@ const UIController = (function () {
 
             const text = `Available budget in ${months[month]}, ${year}`;
             dateContainer.innerHTML = text;
+            dateFooterContainer.innerHTML = `${months[month]}, ${year}`;
         },
 
         //testing UI Controller
