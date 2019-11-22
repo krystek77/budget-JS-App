@@ -288,6 +288,30 @@ const UIController = (function () {
 
 
         },
+        changeType: function (event) {
+            console.log("Change border color...")
+            const inputs = document.querySelectorAll(DOMStrings.inputType + ', ' + DOMStrings.inputDescription + ", " + DOMStrings.inputValue);
+            console.log(inputs)
+            const nodeListToArray = function (list, callback) {
+                for (let index = 0; index < list.length; index++) {
+                    callback(list[index]);
+                }
+            }
+            nodeListToArray(inputs, function (input) {
+                input.classList.toggle('red-focus');
+            })
+
+            const addBtn = document.querySelector(DOMStrings.addBtn);
+            const type = document.querySelector(DOMStrings.inputType).value;
+
+            if (type === 'expence') {
+                addBtn.classList.add('red');
+                addBtn.classList.remove('blue');
+            } else {
+                addBtn.classList.add('blue');
+                addBtn.classList.remove('red');
+            }
+        },
 
         //testing UI Controller
         testing: function () {
@@ -385,6 +409,8 @@ const appController = (function (bC, uiC) {
 
                 }
             })
+            //Add change event to select element
+            document.querySelector(DOMStrings.inputType).addEventListener('change', uiC.changeType);
         }
     }
 
