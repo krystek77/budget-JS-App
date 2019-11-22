@@ -16,6 +16,18 @@ const budgetController = (function () {
         this.percentage = -1;
     }
 
+    Expence.prototype.calculatePercentage = function (totalIncome) {
+        if (totalIncome > 0) {
+            this.percentage = Math.round((this.value / totalIncome) * 100);
+        } else {
+            this.percentage = -1;
+        }
+    }
+
+    Expence.prototype.getPercentage = function () {
+        return this.percentage;
+    }
+
     const calculateTotal = function (type) {
         let sum = 0;
         state.allItems[type].forEach(function (item) {
@@ -43,6 +55,20 @@ const budgetController = (function () {
     }
 
     return {
+        //
+        calculatePercentages: function () {
+            state.allItems["expence"].forEach(function (item) {
+                item.calculatePercentage(state.totals.income);
+            })
+        },
+        //
+        getPercentages: function () {
+            const percentagesArr = state.allItems.expence.map(function (item) {
+                return item.getPercentage();
+            })
+            return percentagesArr;
+        },
+
         //return budget
         returnBudget: function () {
             return {
@@ -102,7 +128,6 @@ const budgetController = (function () {
                 newItem = new Income(ID, description, value);
             } else if (type === "expence") {
                 newItem = new Expence(ID, description, value);
-                newItem.calculatePercentage();
             }
 
             state.allItems[type].push(newItem);
@@ -228,11 +253,7 @@ const UIController = (function () {
                 newMarkup = markup.replace("%id%", newItem.id);
                 newMarkup = newMarkup.replace("%description%", newItem.description);
                 newMarkup = newMarkup.replace("%value%", newItem.value);
-                if (newItem.percentage === "---") {
-                    newMarkup = newMarkup.replace("#7%#", newItem.percentage);
-                } else {
-                    newMarkup = newMarkup.replace("#7%#", newItem.percentage + "%");
-                }
+                newMarkup = newMarkup.replace("#7%#", newItem.percentage);
                 list.insertAdjacentHTML(position, newMarkup);
             }
         },
@@ -265,6 +286,17 @@ const appController = (function (bC, uiC) {
         init: function () {
             //1. Get the field input data
             const DOMStrings = uiC.getDOMStrings();
+
+
+            const updatePercentages = function () {
+                console.log("Update percentages of expences items");
+                //1. Calculate percentages
+                bC.calculatePercentages();
+                //2. Get percentages
+                const percentages = bC.getPercentages();
+                console.log(percentages);
+            }
+
             //reset budget
             uiC.displayBudget({
                 totalsIncome: 0,
@@ -288,7 +320,9 @@ const appController = (function (bC, uiC) {
 
                     //4. Calculate and update Budget
                     updateBudget();
-                   
+                    //updatePercentage
+                    updatePercentages();
+
                     bC.testing();
                 }
 
@@ -314,7 +348,9 @@ const appController = (function (bC, uiC) {
                     //Recalculate budget
                     //Display recalculate budget
                     updateBudget();
-                   
+                    //updatePercentage
+                    updatePercentages();
+
                     bC.testing();
 
 
