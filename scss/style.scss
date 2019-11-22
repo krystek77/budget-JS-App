@@ -212,18 +212,19 @@ ul {
             border: 1px solid $color-blue;
         }
 
-        &.red-focus {
+        &.red-focus:focus {
             border: 1px solid $color-red;
         }
     }
 
     &--value {
+        margin-left: $gap;
 
         &:focus {
             border: 1px solid $color-blue;
         }
 
-        &.red-focus {
+        &.red-focus:focus {
             border: 1px solid $color-red;
         }
     }
