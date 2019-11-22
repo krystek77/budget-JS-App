@@ -175,7 +175,8 @@ const UIController = (function () {
         expences: '.summary--value__expences',
         percentage: '.header--percentage',
         content: '.content',
-        expencePercentage: '.expences--percentage'
+        expencePercentage: '.expences--percentage',
+        dateContainer: '.header--description'
     }
 
     return {
@@ -313,6 +314,31 @@ const UIController = (function () {
             }
         },
 
+        displayDate: function () {
+            const dateContainer = document.querySelector(DOMStrings.dateContainer);
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = date.getMonth(); //for example 10 - November
+
+            const months = Object.freeze({
+                "0": "January",
+                "1": "February",
+                "2": "March",
+                "3": "April",
+                "4": "May",
+                "5": "June",
+                "6": "July",
+                "7": "August",
+                "8": "September",
+                "9": "October",
+                "10": "November",
+                "11": "December",
+            })
+
+            const text = `Available budget in ${months[month]}, ${year}`;
+            dateContainer.innerHTML = text;
+        },
+
         //testing UI Controller
         testing: function () {
             console.log("Testing UI Controller ...");
@@ -337,6 +363,8 @@ const appController = (function (bC, uiC) {
         init: function () {
             //1. Get the field input data
             const DOMStrings = uiC.getDOMStrings();
+            //Display current month and year
+            uiC.displayDate();
 
 
             const updatePercentages = function () {
