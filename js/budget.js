@@ -14,14 +14,6 @@ const budgetController = (function () {
         this.description = description;
         this.value = value;
         this.percentage = -1;
-
-        this.calculatePercentage = function () {
-            if (state.totals.income > 0) {
-                this.percentage = Math.round((this.value / state.totals.income) * 100);
-            } else {
-                this.percentage = "---";
-            }
-        }
     }
 
     const calculateTotal = function (type) {
@@ -51,14 +43,6 @@ const budgetController = (function () {
     }
 
     return {
-
-        //Recalculate the percentage of incomes for each expence
-        recalculatePercentage: function () {
-            state.allItems['expence'].forEach(function (item) {
-                item.calculatePercentage();
-            })
-        },
-
         //return budget
         returnBudget: function () {
             return {
@@ -165,7 +149,7 @@ const UIController = (function () {
         incomes: '.summary--value__incomes',
         expences: '.summary--value__expences',
         percentage: '.header--percentage',
-        content: '.content'
+        content: '.content',
     }
 
     return {
@@ -236,7 +220,7 @@ const UIController = (function () {
                     <button class="btn btn__expences"><i class="fa fa-trash-alt btn--icon"></i></button>
                     <div class="values expences--values">
                         <div class="value expences--value">%value%</div>
-                        <div class="percentage expences--percentage">7%</div>
+                        <div class="percentage expences--percentage">#7%#</div>
                     </div>
                 </li>
                 `;
@@ -244,6 +228,11 @@ const UIController = (function () {
                 newMarkup = markup.replace("%id%", newItem.id);
                 newMarkup = newMarkup.replace("%description%", newItem.description);
                 newMarkup = newMarkup.replace("%value%", newItem.value);
+                if (newItem.percentage === "---") {
+                    newMarkup = newMarkup.replace("#7%#", newItem.percentage);
+                } else {
+                    newMarkup = newMarkup.replace("#7%#", newItem.percentage + "%");
+                }
                 list.insertAdjacentHTML(position, newMarkup);
             }
         },
@@ -299,9 +288,7 @@ const appController = (function (bC, uiC) {
 
                     //4. Calculate and update Budget
                     updateBudget();
-                    //5. Recalculate percentage of incomes for each expence
-                    bC.recalculatePercentage();
-
+                   
                     bC.testing();
                 }
 
@@ -327,9 +314,7 @@ const appController = (function (bC, uiC) {
                     //Recalculate budget
                     //Display recalculate budget
                     updateBudget();
-                    //5. Recalculate percentage of incomes for each expence
-                    bC.recalculatePercentage();
-
+                   
                     bC.testing();
 
 
