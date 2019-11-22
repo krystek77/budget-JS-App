@@ -140,11 +140,18 @@ ul {
         &:hover {
             background-color: $color-yellow;
         }
+
+        &.blue {
+            color: $color-blue;
+        }
+
+        &.red {
+            color: $color-red;
+        }
     }
 
     &__incomes {
         background-color: rgba($color: $color-blue, $alpha: 0.2);
-        color: $color-blue;
 
         &:hover {
             background-color: $color-yellow;
@@ -188,14 +195,43 @@ ul {
         border-radius: 0.2rem;
         border: 1px solid $color-grey;
         outline: none;
+
+        &:focus {
+            border: 1px solid $color-blue;
+        }
+
+        &.red-focus:focus {
+            border: 1px solid $color-red;
+        }
     }
 
     &--description {
         width: 360px;
+
+        &:focus {
+            border: 1px solid $color-blue;
+        }
+
+        &.red-focus {
+            border: 1px solid $color-red;
+        }
+    }
+
+    &--value {
+
+        &:focus {
+            border: 1px solid $color-blue;
+        }
+
+        &.red-focus {
+            border: 1px solid $color-red;
+        }
     }
 
     &--value,
     &--description {
+        outline: none;
+        width: 360px;
         padding: $gap;
         border: 1px solid $color-grey;
         font-size: 1.2rem;
