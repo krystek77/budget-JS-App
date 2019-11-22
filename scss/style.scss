@@ -152,6 +152,7 @@ ul {
 
     &__incomes {
         background-color: rgba($color: $color-blue, $alpha: 0.2);
+        color: $color-blue;
 
         &:hover {
             background-color: $color-yellow;
