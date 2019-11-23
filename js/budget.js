@@ -178,16 +178,57 @@ const UIController = (function () {
         expencePercentage: '.expences--percentage',
         dateContainer: '.header--description',
         dateFooterContainer: '.footer > .container'
-    }
+    };
+
+    /**
+     * Format given number
+     * 
+     * 
+     * @param {number} number 
+     * @param {string} type  "income" or "expence"
+     */
+    const formatNumber = function (number, type) {
+        //if income: 1000.123 -> + 1,000.12
+        //if expence: 1000.245 -> - 1,000.25; 100,245 -> - 100.25
+        //if expence 11234,235 -> - 11,234.26
+        // etc.
+
+        number = number.toFixed(2);
+        const numberArr = number.split(".");
+        let integerPart = numberArr[0];
+        const decimalPart = numberArr[1];
+        if (integerPart.length > 3) {
+            // min. 4
+            integerPart = integerPart.substring(0, integerPart.length - 3) + "," + integerPart.substring(integerPart.length - 3);
+
+        }
+        const formatedNumber = integerPart + "." + decimalPart;
+
+        // const sign = (type === "income") ? "+" : "-";
+        // console.log(type);
+        // console.log(number);
+        // console.log(numberArr);
+        // console.log(formatedNumber);
+        // console.log((type === "income" ? "+" : "-") + " " + formatedNumber);
+        // console.log(sign + " " + formatedNumber);
+
+        return (type === "income" ? "+" : "-") + " " + formatedNumber
+    };
 
     return {
 
         //display budget on UI
         displayBudget: function (obj) {
 
-            document.querySelector(DOMStrings.budget).textContent = obj.budget;
-            document.querySelector(DOMStrings.incomes).textContent = obj.totalsIncome
-            document.querySelector(DOMStrings.expences).textContent = obj.totalsExpence;
+            let type = "expence";
+
+            if (obj.budget >= 0) {
+                type = "income";
+            }
+
+            document.querySelector(DOMStrings.budget).textContent = formatNumber(obj.budget, type);
+            document.querySelector(DOMStrings.incomes).textContent = formatNumber(obj.totalsIncome, "income");
+            document.querySelector(DOMStrings.expences).textContent = formatNumber(obj.totalsExpence, "expence");
             if (obj.percentage > 0) {
                 document.querySelector(DOMStrings.percentage).textContent = obj.percentage + "%";
             } else {
@@ -203,6 +244,8 @@ const UIController = (function () {
 
         //get the field input data
         getInputs: function () {
+
+
             return {
                 value: parseFloat(document.querySelector(DOMStrings.inputValue).value),
                 description: document.querySelector(DOMStrings.inputDescription).value,
@@ -237,7 +280,7 @@ const UIController = (function () {
             `;
                 newMarkup = markup.replace("%id%", newItem.id);
                 newMarkup = newMarkup.replace("%description%", newItem.description);
-                newMarkup = newMarkup.replace("%value%", newItem.value);
+                newMarkup = newMarkup.replace("%value%", formatNumber(newItem.value, type));
                 list.insertAdjacentHTML(position, newMarkup);
 
             } else if (type === "expence") {
@@ -255,7 +298,7 @@ const UIController = (function () {
 
                 newMarkup = markup.replace("%id%", newItem.id);
                 newMarkup = newMarkup.replace("%description%", newItem.description);
-                newMarkup = newMarkup.replace("%value%", newItem.value);
+                newMarkup = newMarkup.replace("%value%", formatNumber(newItem.value, type));
                 newMarkup = newMarkup.replace("#7%#", newItem.percentage);
                 list.insertAdjacentHTML(position, newMarkup);
             }
@@ -407,6 +450,8 @@ const appController = (function (bC, uiC) {
                     //updatePercentage
                     updatePercentages();
 
+                    // uiC.formatNumber(11023.125, inputs.type);
+
                     bC.testing();
                 }
 
@@ -434,6 +479,8 @@ const appController = (function (bC, uiC) {
                     updateBudget();
                     //updatePercentage
                     updatePercentages();
+
+                    // uiC.formatNumber(11023.125, inputs.type);
 
                     bC.testing();
 
