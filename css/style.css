@@ -1,0 +1,297 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  margin: 0;
+  color: #BABABA;
+  min-height: 100vh;
+}
+
+h1,
+h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: Oswald, sans-serif;
+  font-weight: 700;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.container {
+  max-width: 1170px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.percentage {
+  padding: 5px;
+  margin-left: 10px;
+  border-radius: 0.2rem;
+  font-weight: 500;
+  color: white;
+}
+
+.header {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background: url("../images/header_bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left center;
+}
+.header--title {
+  text-transform: capitalize;
+  margin-bottom: 15px;
+  text-shadow: 0px 0px 2px black;
+  font-size: 3rem;
+}
+.header--description {
+  font-size: 1.4rem;
+  padding: 15px;
+  color: white;
+}
+.header--budget-value {
+  font-weight: 700;
+  font-size: 3rem;
+  font-family: Oswald, sans-serif;
+  letter-spacing: 0.2rem;
+  color: white;
+}
+.header--percentage {
+  background-color: rgba(186, 186, 186, 0.3);
+  border: 1px solid rgba(186, 186, 186, 0.2);
+}
+
+.summary {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 340px;
+}
+.summary--label {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.summary--value {
+  align-self: center;
+  font-weight: 500;
+  color: white;
+}
+.summary--values__expences {
+  display: flex;
+}
+.summary__incomes {
+  background-color: #2082D5;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.summary__expences {
+  background-color: #E8341C;
+}
+
+.btn {
+  cursor: pointer;
+  border-radius: 0.2rem;
+  border: 1px solid #BABABA;
+  padding: 10px;
+  text-align: center;
+  transition: all 0.3s ease-in;
+  outline: none;
+  margin-left: 15px;
+}
+.btn i {
+  font-size: 1.5rem;
+}
+.btn__add:hover {
+  background-color: #D8D42B;
+}
+.btn__add.blue {
+  color: #2082D5;
+}
+.btn__add.red {
+  color: #E8341C;
+}
+.btn__incomes {
+  background-color: rgba(32, 130, 213, 0.2);
+  color: #2082D5;
+}
+.btn__incomes:hover {
+  background-color: #D8D42B;
+}
+.btn__expences {
+  background-color: rgba(232, 52, 28, 0.2);
+  color: #E8341C;
+}
+.btn__expences:hover {
+  background-color: #D8D42B;
+}
+.btn__incomes, .btn__expences {
+  display: none;
+  padding: 3px 5px;
+  float: right;
+}
+.btn__incomes i, .btn__expences i {
+  font-size: 1.2rem;
+}
+
+.form {
+  padding: 15px;
+  background-color: #d4d4d4;
+}
+.form .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form--select {
+  padding: 7.5px;
+  margin-right: 15px;
+  border-radius: 0.2rem;
+  border: 1px solid #BABABA;
+  outline: none;
+}
+.form--select:focus {
+  border: 1px solid #2082D5;
+}
+.form--select.red-focus:focus {
+  border: 1px solid #E8341C;
+}
+.form--description {
+  width: 360px;
+}
+.form--description:focus {
+  border: 1px solid #2082D5;
+}
+.form--description.red-focus:focus {
+  border: 1px solid #E8341C;
+}
+.form--value {
+  margin-left: 15px;
+}
+.form--value:focus {
+  border: 1px solid #2082D5;
+}
+.form--value.red-focus:focus {
+  border: 1px solid #E8341C;
+}
+.form--value, .form--description {
+  outline: none;
+  width: 360px;
+  padding: 15px;
+  border: 1px solid #BABABA;
+  font-size: 1.2rem;
+  border-radius: 0.2rem;
+}
+
+.incomes .title,
+.expences .title {
+  text-align: left;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+.incomes .label,
+.expences .label {
+  color: #222324;
+  font-family: Oswald;
+  font-weight: 300;
+  float: left;
+  text-align: left;
+}
+.incomes .incomes--title,
+.expences .incomes--title {
+  color: #E8341C;
+}
+.incomes .incomes--value,
+.expences .incomes--value {
+  color: #2082D5;
+}
+.incomes .expences--title,
+.expences .expences--title {
+  color: #2082D5;
+}
+.incomes .expences--value,
+.expences .expences--value {
+  color: #E8341C;
+}
+.incomes .expences--percentage,
+.expences .expences--percentage {
+  background-color: rgba(232, 52, 28, 0.3);
+  border: 1px solid rgba(232, 52, 28, 0.2);
+  font-size: 0.8rem;
+}
+
+.item {
+  padding: 7.5px 15px;
+  background-color: #ededed;
+  font-size: 1.2rem;
+  border-top: 1px solid #BABABA;
+  border-bottom: 1px solid #BABABA;
+  margin: 5px 0;
+  overflow: hidden;
+}
+.item .value,
+.item .percentage {
+  transition: all 0.3s ease-in;
+}
+.item .values {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in;
+  float: right;
+}
+.item:hover .values {
+  transform: translateX(-10px);
+}
+.item:hover .btn {
+  display: block;
+}
+.item:nth-child(2n) {
+  background-color: #d4d4d4;
+}
+.item .value {
+  font-family: Oswald;
+  font-weight: 300;
+}
+
+.main {
+  flex-grow: 1;
+}
+
+.content {
+  padding: 30px;
+}
+.content .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 30px;
+}
+
+.footer {
+  background-color: black;
+  color: #d4d4d4;
+  font-family: Oswald;
+  font-weight: 300;
+}
+.footer .container {
+  padding: 15px;
+}
+
+/*# sourceMappingURL=style.css.map */
